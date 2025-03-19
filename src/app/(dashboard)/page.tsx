@@ -1,4 +1,4 @@
-import ExcalidrawWrapper from './components/ExcalidrawWrapper';
+import ExcalidrawWrapper from '@/components/ExcalidrawWrapper';
 
 export default function Home() {
     return (

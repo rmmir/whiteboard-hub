@@ -1,7 +1,11 @@
 'use client';
-import { Excalidraw } from '@excalidraw/excalidraw';
+import dynamic from 'next/dynamic';
 
 import '@excalidraw/excalidraw/index.css';
+
+const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then((mod) => mod.Excalidraw), {
+    ssr: false,
+});
 
 const ExcalidrawWrapper: React.FC = () => {
     return (
