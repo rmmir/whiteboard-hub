@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { eq } from 'drizzle-orm';
 import { validate } from 'uuid';
 
-import { usersTable } from '../../../../db/schema';
+import { usersTable } from '@db/schema';
 
 const db = drizzle(process.env.DATABASE_URL!);
 

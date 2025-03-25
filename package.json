@@ -21,10 +21,12 @@
         "@excalidraw/excalidraw": "^0.18.0",
         "@libsql/client": "^0.15.0",
         "drizzle-orm": "^0.40.1",
+        "jose": "^6.0.10",
         "next": "15.2.2",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "sqlite3": "^5.1.7"
+        "sqlite3": "^5.1.7",
+        "zod": "^3.24.2"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
