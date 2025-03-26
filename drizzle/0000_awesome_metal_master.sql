@@ -1,5 +1,5 @@
 CREATE TABLE `user` (
-	`id` text PRIMARY KEY DEFAULT '10f518c6-c6de-43a0-8337-680cea923f32' NOT NULL,
+	`id` text PRIMARY KEY DEFAULT '4aa5c7f6-0ab3-41d2-9267-4396b1f31bda' NOT NULL,
 	`name` text NOT NULL,
 	`email` text NOT NULL,
 	`password` text NOT NULL,

@@ -22,7 +22,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     return NextResponse.json({ message: `User with id ${params.id} updated successfully!` });
 }
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+    console.log(params)
     const validationError = await validateProvidedId(params.id);
     if (validationError) {
         return NextResponse.json(

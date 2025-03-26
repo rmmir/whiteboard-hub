@@ -10,13 +10,3 @@ export async function GET() {
 
     return NextResponse.json({ users });
 }
-
-export async function POST(req: NextRequest) {
-    const user: typeof usersTable.$inferInsert = await req.json();
-
-    const { insertedId } = (
-        await db.insert(usersTable).values(user).returning({ insertedId: usersTable.id })
-    )[0];
-
-    return NextResponse.json({ message: `User with id ${insertedId} created successfully!` });
-}
