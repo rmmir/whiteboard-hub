@@ -24,11 +24,11 @@ export async function POST(req: NextRequest) {
         if (existingUser[0].email !== user.email || !isPasswordMatch) {
             return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
         }
-    
-        const cookie = await createSession(existingUser[0].id);
-        const session = await cookie.get("session");
         
-        return NextResponse.json({ message: 'Login successful', token: session?.value });
+        const sessionCookie = await createSession(existingUser[0].id);
+        const response = NextResponse.json({ message: 'Login successful'});
+        response.headers.set('Set-Cookie', sessionCookie.toString());
+        return response;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
         return NextResponse.json({ error: errorMessage }, { status: 400 });
