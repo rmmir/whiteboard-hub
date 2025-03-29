@@ -3,9 +3,9 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 
-import { usersTable } from '@db/schema';
-import { loginSchema } from '@use-cases/auth';
-import { createSession } from "@/app/lib/session";
+import { usersTable } from '@/db/schema';
+import { loginSchema } from '@/use-cases/auth';
+import { createSession } from "@/lib/session";
 
 type UserLoginData = Pick<typeof usersTable.$inferInsert, 'email' | 'password'>;
 

@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { drizzle } from 'drizzle-orm/libsql';
 
-import { usersTable } from '@db/schema';
+import { usersTable } from '@/db/schema';
 
 const db = drizzle(process.env.DATABASE_URL!);
 

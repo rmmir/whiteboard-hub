@@ -20,12 +20,12 @@
         ],
         "paths": {
             "@/*": ["./src/*"],
-            "@components/*": ["./src/app/components/*"],
+            "@components/*": ["./src/components/*"],
             "@pages/*": ["./src/app/pages/*"],
             "@data-access/*": ["./src/app/data-access/*"],
-            "@use-cases/*": ["./src/app/use-cases/*"],
-            "@api/*": ["./src/app/api/*"],
-            "@db/*": ["./src/app/db/*"],
+            "@use-cases/*": ["./src/use-cases/*"],
+            "@api/*": ["src/app/api/*"],
+            "@db/*": ["./src/db/*"],
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

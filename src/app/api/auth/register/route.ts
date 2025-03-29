@@ -3,8 +3,8 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 
-import { usersTable } from '@db/schema';
-import { regiserSchema } from '@use-cases/auth';
+import { usersTable } from '@/db/schema';
+import { regiserSchema } from '@/use-cases/auth';
 
 type UserRegisterData = Pick<typeof usersTable.$inferInsert, 'name' | 'email' | 'password'>;
 
