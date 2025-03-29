@@ -1,9 +1,10 @@
 'use client';
 
-import axios from 'axios';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 
 type LoginFormInputs = {
     email: string;
@@ -11,6 +12,7 @@ type LoginFormInputs = {
 };
 
 export default function LoginForm() {
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
     const router = useRouter();
     const mutation = useMutation({
@@ -20,14 +22,13 @@ export default function LoginForm() {
         onSuccess: () => {
             router.push('/');
         },
-        onError: (error: unknown) => {
-            console.error('Login failed:', error);
+        onError: (error: AxiosError) => {
+            const errorData = error.response?.data as { error: string };
+            setErrorMsg(errorData.error);
         },
     });
 
-    const onSubmit = (data: LoginFormInputs) => {
-        mutation.mutate(data);
-    };
+    const onSubmit = (data: LoginFormInputs) => mutation.mutate(data);
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -80,9 +81,7 @@ export default function LoginForm() {
                 </form>
                 {mutation.isError && (
                     <p className="mt-4 text-sm text-red-500 text-center">
-                        {mutation.error instanceof Error
-                            ? mutation.error.message
-                            : 'An error occurred. Please try again.'}
+                        { errorMsg ? `${errorMsg}` : 'An error occurred. Please try again.' }
                     </p>
                 )}
             </div>

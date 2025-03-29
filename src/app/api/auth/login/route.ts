@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
         
         const user: UserLoginData = parsedResult.data;
         const existingUser = await db.select().from(usersTable).where(eq(usersTable.email, user.email));
-        const isPasswordMatch = await bcrypt.compare(user.password, existingUser[0].password);
-        if (existingUser[0].email !== user.email || !isPasswordMatch) {
+        const isPasswordMatch = existingUser.length > 0 && await bcrypt.compare(user.password, existingUser[0].password);
+        if (existingUser.length === 0 || !isPasswordMatch) {
             return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
         }
         
