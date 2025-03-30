@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     });
     
     return (
-        <header className="flex items-center justify-between p-4 bg-gray-800 text-white">
+        <header className="flex items-center justify-between p-4 bg-gray-800 text-white position-fixed top-0 left-0 right-0 z-10">
             <h1 className="text-2xl font-bold">Whiteboard Hub</h1>
             <nav className="space-x-4">
                 <a href="/" className="hover:text-gray-300">Home</a>
