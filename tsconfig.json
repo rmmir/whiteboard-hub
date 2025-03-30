@@ -24,7 +24,7 @@
             "@pages/*": ["./src/app/pages/*"],
             "@data-access/*": ["./src/app/data-access/*"],
             "@use-cases/*": ["./src/use-cases/*"],
-            "@api/*": ["src/app/api/*"],
+            "@api/*": ["./src/app/api/*"],
             "@db/*": ["./src/db/*"],
         }
     },

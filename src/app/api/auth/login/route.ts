@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     try {
         const parsedResult = loginSchema.safeParse(await req.json());
         if (!parsedResult.success) {
-            return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
+            return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
         }
         
         const user: UserLoginData = parsedResult.data;
