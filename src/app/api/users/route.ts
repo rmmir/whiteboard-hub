@@ -1,12 +1,9 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { drizzle } from 'drizzle-orm/libsql';
+import { NextResponse } from 'next/server';
 
-import { usersTable } from '@/db/schema';
-
-const db = drizzle(process.env.DATABASE_URL!);
+import { getAllUsers } from '@/data-access/users';
 
 export async function GET() {
-    const users = await db.select().from(usersTable);
+    const users = await getAllUsers();
 
     return NextResponse.json({ users });
 }
