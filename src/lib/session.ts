@@ -3,7 +3,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
 
-type SessionPayload = {
+export type SessionPayload = {
     userId: string;
     expiresAt: Date;
 }
