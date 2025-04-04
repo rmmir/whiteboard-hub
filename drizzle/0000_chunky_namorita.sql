@@ -1,5 +1,5 @@
 CREATE TABLE `user` (
-	`id` text PRIMARY KEY DEFAULT '05c28ba3-8e1f-4e7e-834d-0ec183c6ab18' NOT NULL,
+	`id` text PRIMARY KEY DEFAULT '9c1fb80b-d657-475b-b004-9a11c2106242' NOT NULL,
 	`name` text NOT NULL,
 	`email` text NOT NULL,
 	`password` text NOT NULL,
@@ -9,8 +9,9 @@ CREATE TABLE `user` (
 --> statement-breakpoint
 CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
 CREATE TABLE `whiteboard` (
-	`id` text PRIMARY KEY DEFAULT 'e10fb7b2-773f-4a4b-843c-29f962f0db62' NOT NULL,
+	`id` text PRIMARY KEY DEFAULT 'f98253ea-98ce-45f8-b2c4-32a0f8b6b877' NOT NULL,
 	`name` text NOT NULL,
+	`description` text NOT NULL,
 	`elements` text NOT NULL,
 	`created_at` text DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`updated_at` text DEFAULT CURRENT_TIMESTAMP NOT NULL,
