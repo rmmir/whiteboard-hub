@@ -14,6 +14,7 @@ export const usersTable = sqliteTable('user', {
 export const whiteboardTable = sqliteTable('whiteboard', {
     id: text('id').primaryKey().default(uuid()),
     name: text('name').notNull(),
+    description: text('description').notNull(),
     elements: text('elements', { mode: 'json' }).notNull(),
     createdAt: text('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text('updated_at').notNull().default(sql`CURRENT_TIMESTAMP`),

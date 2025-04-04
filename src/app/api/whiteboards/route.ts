@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
         }
     
         return NextResponse.json({ message: 'Whiteboard created successfully' });
-    } catch(error) {
+    } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
         return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
