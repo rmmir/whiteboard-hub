@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getAllWhiteboards } from '@/data-access/whiteboards';
 import { createWhiteboardHandler } from '@/use-cases/whiteboards';
+import { catchErrorHandler } from '@/lib/errorHandler';
 
 export async function GET() {
     const whiteboards = await getAllWhiteboards();
@@ -18,7 +19,6 @@ export async function POST(request: NextRequest) {
     
         return NextResponse.json({ message: 'Whiteboard created successfully' });
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-        return NextResponse.json({ error: errorMessage }, { status: 400 });
+        return catchErrorHandler(error);
     }
 }

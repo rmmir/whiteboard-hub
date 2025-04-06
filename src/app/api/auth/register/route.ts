@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { register } from "@/use-cases/register";
+import { catchErrorHandler } from "@/lib/errorHandler";
 
 export async function POST(req: NextRequest) {
     try {
@@ -11,7 +12,6 @@ export async function POST(req: NextRequest) {
         
         return NextResponse.json({ message: `User registered successfully!` });
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-        return NextResponse.json({ error: errorMessage }, { status: 400 });
+        return catchErrorHandler(error);
     }
 }

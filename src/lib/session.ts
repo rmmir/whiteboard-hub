@@ -1,7 +1,9 @@
 import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { RequestCookie, ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { NextResponse } from "next/server";
+import { getUserById } from "@/data-access/users";
 
 export type SessionPayload = {
     userId: string;
@@ -38,4 +40,23 @@ export async function decrypt(session: string | undefined = ""): Promise<Session
     } catch (error) {
         return null;
     }
+}
+
+export async function authGuardCheck(session: RequestCookie | undefined) {
+    if (!session) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const payload = await decrypt(session.value);
+    if (!payload) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const user = await getUserById(payload.userId);
+    
+    if (user.length === 0) {
+        return NextResponse.json({ error: `Invalid userId: ${payload.userId}`, status: 400 });
+    }
+
+    return payload;
 }

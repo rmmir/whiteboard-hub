@@ -12,11 +12,11 @@ import { Button } from '@/components/shadcn-ui/button';
 import { Label } from '@/components/shadcn-ui/label';
 
 type WhiteboardCardDialogProps = {
-    title: string;
+    name: string;
     description: string;
 }
 
-const WhiteboardCardDialog: React.FC<WhiteboardCardDialogProps> = ({ title, description }) => {
+const WhiteboardCardDialog: React.FC<WhiteboardCardDialogProps> = ({ name, description }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -31,10 +31,10 @@ const WhiteboardCardDialog: React.FC<WhiteboardCardDialogProps> = ({ title, desc
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="title" className="text-right">
-                            Title
+                        <Label htmlFor="name" className="text-right">
+                            Name
                         </Label>
-                        <Input id="title" defaultValue={title} className="col-span-3" />
+                        <Input id="name" defaultValue={name} className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="description" className="text-right">
