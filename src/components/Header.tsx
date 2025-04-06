@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
@@ -14,14 +14,16 @@ const Header: React.FC = () => {
             router.push('/login');
         },
     });
-    
+
     return (
         <header className="flex items-center justify-between p-4 bg-gray-800 text-white position-fixed top-0 left-0 right-0 z-10">
             <h1 className="text-2xl font-bold">Whiteboard Hub</h1>
             <nav className="space-x-4">
-                <a href="/" className="hover:text-gray-300">Home</a>
-                <button 
-                    onClick={() => mutation.mutate()} 
+                <a href="/" className="hover:text-gray-300">
+                    Home
+                </a>
+                <button
+                    onClick={() => mutation.mutate()}
                     className="hover:text-gray-300 cursor-pointer bg-transparent border-none p-0"
                 >
                     Logout
@@ -29,6 +31,6 @@ const Header: React.FC = () => {
             </nav>
         </header>
     );
-}
+};
 
 export default Header;

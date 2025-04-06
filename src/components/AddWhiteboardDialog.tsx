@@ -15,7 +15,9 @@ const AddWhiteboardDialog: React.FC = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='bg-gray-600 cursor-pointer' type="submit">Add whiteboard</Button>
+                <Button className="bg-gray-600 cursor-pointer" type="submit">
+                    Add whiteboard
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -39,7 +41,9 @@ const AddWhiteboardDialog: React.FC = () => {
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button className='cursor-pointer' type="submit">Save changes</Button>
+                    <Button className="cursor-pointer" type="submit">
+                        Save changes
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

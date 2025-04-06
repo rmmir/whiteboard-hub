@@ -1,8 +1,8 @@
 import { drizzle } from 'drizzle-orm/libsql';
-import { eq } from "drizzle-orm";
+import { eq } from 'drizzle-orm';
 
-import { usersTable } from "@/db/schema";
-import { UserRegisterData } from "@/models/user";
+import { usersTable } from '@/db/schema';
+import { UserRegisterData } from '@/models/user';
 
 const db = drizzle(process.env.DATABASE_URL!);
 
@@ -19,13 +19,16 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function createUser(user: UserRegisterData, hashedPassword: string) {
-    await db.insert(usersTable).values({...user, password: hashedPassword});
+    await db.insert(usersTable).values({ ...user, password: hashedPassword });
 }
 
-export async function updateUserById(id: string, updateData: Partial<typeof usersTable.$inferInsert>) {
+export async function updateUserById(
+    id: string,
+    updateData: Partial<typeof usersTable.$inferInsert>,
+) {
     await db.update(usersTable).set(updateData).where(eq(usersTable.id, id));
 }
 
 export async function deleteUserById(id: string) {
-    await db.delete(usersTable).where(eq(usersTable.id, id))
+    await db.delete(usersTable).where(eq(usersTable.id, id));
 }

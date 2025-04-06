@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 
 import { regiserSchema } from '@/lib/authSchema';
-import { UserRegisterData } from "@/models/user";
-import { createUser, getUserByEmail } from "@/data-access/users";
+import { UserRegisterData } from '@/models/user';
+import { createUser, getUserByEmail } from '@/data-access/users';
 
 export async function register(req: NextRequest) {
     const parsedResult = regiserSchema.safeParse(await req.json());
@@ -18,6 +18,6 @@ export async function register(req: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
-    
+
     await createUser(user, hashedPassword);
 }

@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { login } from "@/use-cases/login";
-import { catchErrorHandler } from "@/lib/errorHandler";
+import { login } from '@/use-cases/login';
+import { catchErrorHandler } from '@/lib/errorHandler';
 
 export async function POST(req: NextRequest) {
     try {

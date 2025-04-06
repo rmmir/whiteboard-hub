@@ -7,8 +7,12 @@ export const usersTable = sqliteTable('user', {
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
     password: text('password').notNull(),
-    createdAt: text('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
-    updatedAt: text('updated_at').notNull().default(sql`CURRENT_TIMESTAMP`),
+    createdAt: text('created_at')
+        .notNull()
+        .default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text('updated_at')
+        .notNull()
+        .default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const whiteboardTable = sqliteTable('whiteboard', {
@@ -16,7 +20,13 @@ export const whiteboardTable = sqliteTable('whiteboard', {
     name: text('name').notNull(),
     description: text('description').notNull(),
     elements: text('elements', { mode: 'json' }).notNull(),
-    createdAt: text('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
-    updatedAt: text('updated_at').notNull().default(sql`CURRENT_TIMESTAMP`),
-    userId: text('user_id').notNull().references(() => usersTable.id),
+    createdAt: text('created_at')
+        .notNull()
+        .default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text('updated_at')
+        .notNull()
+        .default(sql`CURRENT_TIMESTAMP`),
+    userId: text('user_id')
+        .notNull()
+        .references(() => usersTable.id),
 });

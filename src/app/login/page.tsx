@@ -13,7 +13,11 @@ type LoginFormInputs = {
 
 export default function LoginForm() {
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormInputs>();
     const router = useRouter();
     const mutation = useMutation({
         mutationFn: (data: LoginFormInputs) => {
@@ -46,8 +50,8 @@ export default function LoginForm() {
                             className={`mt-1 block w-full px-3 py-2 border text-black ${
                                 errors.email ? 'border-red-500' : 'border-gray-300'
                             } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-                         />
-                         {errors.email && (
+                        />
+                        {errors.email && (
                             <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
                         )}
                     </div>
@@ -81,15 +85,13 @@ export default function LoginForm() {
                 </form>
                 {mutation.isError && (
                     <p className="mt-4 text-sm text-red-500 text-center">
-                        { errorMsg ? `${errorMsg}` : 'An error occurred. Please try again.' }
+                        {errorMsg ? `${errorMsg}` : 'An error occurred. Please try again.'}
                     </p>
                 )}
-                <div className='flex justify-center items-center mt-4'>
-                    <p className="text-gray-600">
-                        Don't have an account?
-                    </p>
-                    <button 
-                        onClick={() => router.push('/register')} 
+                <div className="flex justify-center items-center mt-4">
+                    <p className="text-gray-600">Don't have an account?</p>
+                    <button
+                        onClick={() => router.push('/register')}
                         className="text-gray-800 hover:text-gray-500 cursor-pointer bg-transparent border-none p-0 ml-1"
                     >
                         Click to register

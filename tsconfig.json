@@ -25,7 +25,7 @@
             "@data-access/*": ["./src/app/data-access/*"],
             "@use-cases/*": ["./src/use-cases/*"],
             "@api/*": ["./src/app/api/*"],
-            "@db/*": ["./src/db/*"],
+            "@db/*": ["./src/db/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

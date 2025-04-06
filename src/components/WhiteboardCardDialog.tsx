@@ -14,13 +14,15 @@ import { Label } from '@/components/shadcn-ui/label';
 type WhiteboardCardDialogProps = {
     name: string;
     description: string;
-}
+};
 
 const WhiteboardCardDialog: React.FC<WhiteboardCardDialogProps> = ({ name, description }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='cursor-pointer' variant="outline">Edit</Button>
+                <Button className="cursor-pointer" variant="outline">
+                    Edit
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -44,7 +46,9 @@ const WhiteboardCardDialog: React.FC<WhiteboardCardDialogProps> = ({ name, descr
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button className='cursor-pointer' type="submit">Save changes</Button>
+                    <Button className="cursor-pointer" type="submit">
+                        Save changes
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

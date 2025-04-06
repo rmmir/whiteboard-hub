@@ -9,13 +9,13 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-  } from "@/components/shadcn-ui/card";
+} from '@/components/shadcn-ui/card';
 import WhiteboardCardDialog from '@/components/WhiteboardCardDialog';
 import { useWhiteboards } from '@/hooks/useWhiteboards';
 import { Whiteboard } from '@/models/whiteboard';
 
 export default function Home() {
-    const {data, isLoading, isError} = useWhiteboards();
+    const { data, isLoading, isError } = useWhiteboards();
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Something went wrong!</p>;
 
@@ -30,13 +30,13 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-4 m-6">
                     {data?.map((whiteboard: Whiteboard) => (
                         <Card key={whiteboard.id}>
-                            <CardHeader className='flex flex-row justify-between'>
+                            <CardHeader className="flex flex-row justify-between">
                                 <div>
                                     <CardTitle>{whiteboard.name}</CardTitle>
                                     <CardDescription>{whiteboard.description}</CardDescription>
                                 </div>
-                                <WhiteboardCardDialog 
-                                    name={whiteboard.name} 
+                                <WhiteboardCardDialog
+                                    name={whiteboard.name}
                                     description={whiteboard.description}
                                 />
                             </CardHeader>

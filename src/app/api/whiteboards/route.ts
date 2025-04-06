@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
         if (response instanceof NextResponse) {
             return response;
         }
-    
+
         return NextResponse.json({ message: 'Whiteboard created successfully' });
     } catch (error) {
         return catchErrorHandler(error);

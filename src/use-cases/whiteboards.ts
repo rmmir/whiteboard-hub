@@ -1,10 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { createWhiteboard, updateWhiteboardDetailsById, updateWhiteboardElementsById } from "@/data-access/whiteboards";
-import { authGuardCheck, SessionPayload } from "@/lib/session";
-import { createWhiteboardSchema, updateWhiteboardDetailsSchema, updateWhiteboardElementsSchema } from "@/lib/whiteboardSchema";
-import { CreateWhiteboardData, UpdateWhiteboardDetailsData, UpdateWhiteboardElementsData, WhiteboardDetails, WhiteboardElements } from "@/models/whiteboard";
-import { ParamsId } from "@/models/utils";
+import {
+    createWhiteboard,
+    updateWhiteboardDetailsById,
+    updateWhiteboardElementsById,
+} from '@/data-access/whiteboards';
+import { authGuardCheck, SessionPayload } from '@/lib/session';
+import {
+    createWhiteboardSchema,
+    updateWhiteboardDetailsSchema,
+    updateWhiteboardElementsSchema,
+} from '@/lib/whiteboardSchema';
+import {
+    CreateWhiteboardData,
+    UpdateWhiteboardDetailsData,
+    UpdateWhiteboardElementsData,
+    WhiteboardDetails,
+    WhiteboardElements,
+} from '@/models/whiteboard';
+import { ParamsId } from '@/models/utils';
 
 export async function createWhiteboardHandler(request: NextRequest) {
     const parsedResult = createWhiteboardSchema.safeParse(await request.json());
@@ -21,7 +35,7 @@ export async function createWhiteboardHandler(request: NextRequest) {
         name: whiteboard.name,
         description: whiteboard.description,
         elements: [],
-        userId: (payload as SessionPayload).userId
+        userId: (payload as SessionPayload).userId,
     };
 
     await createWhiteboard(newWhiteboard);
@@ -40,7 +54,7 @@ export async function updateWhiteboardDetailsHandler(request: NextRequest, param
 
     const updatedWhiteboardDetails: UpdateWhiteboardDetailsData = {
         name: whiteboard.name,
-        description: whiteboard.description
+        description: whiteboard.description,
     };
 
     await updateWhiteboardDetailsById(params.id, updatedWhiteboardDetails);
@@ -58,7 +72,7 @@ export async function updateWhiteboardContentHandler(request: NextRequest, param
     if (!payload) return payload;
 
     const updatedWhiteboardDetails: UpdateWhiteboardElementsData = {
-        elements: whiteboardElements.elements
+        elements: whiteboardElements.elements,
     };
 
     await updateWhiteboardElementsById(params.id, updatedWhiteboardDetails);

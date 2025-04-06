@@ -10,7 +10,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
         if (response instanceof NextResponse) {
             return response;
         }
-    
+
         return NextResponse.json({ message: 'Whiteboard elements updated successfully' });
     } catch (error) {
         return catchErrorHandler(error);

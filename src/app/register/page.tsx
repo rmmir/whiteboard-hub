@@ -15,7 +15,11 @@ type RegisterFormInputs = {
 
 export default function RegisterForm() {
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormInputs>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<RegisterFormInputs>();
     const router = useRouter();
     const mutation = useMutation({
         mutationFn: (data: RegisterFormInputs) => {
@@ -47,7 +51,7 @@ export default function RegisterForm() {
             <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
                 <h1 className="text-2xl font-bold text-center mb-6 text-black">Register</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
+                    <div className="mb-4">
                         <label htmlFor="name" className="block text-sm font-medium text-black">
                             Name
                         </label>
@@ -55,8 +59,11 @@ export default function RegisterForm() {
                             type="name"
                             id="name"
                             {...register('name', {
-                                 required: 'Name is required',
-                                 minLength: { value: 3, message: 'Name must be at least 3 characters long' }
+                                required: 'Name is required',
+                                minLength: {
+                                    value: 3,
+                                    message: 'Name must be at least 3 characters long',
+                                },
                             })}
                             className={`mt-1 block w-full px-3 py-2 border text-black ${
                                 errors.name ? 'border-red-500' : 'border-gray-300'
@@ -89,9 +96,12 @@ export default function RegisterForm() {
                         <input
                             type="password"
                             id="password"
-                            {...register('password', { 
-                                required: 'Password is required', 
-                                minLength: { value: 8, message: 'Password must be at least 8 characters long' } 
+                            {...register('password', {
+                                required: 'Password is required',
+                                minLength: {
+                                    value: 8,
+                                    message: 'Password must be at least 8 characters long',
+                                },
                             })}
                             className={`mt-1 block w-full px-3 py-2 border text-black ${
                                 errors.password ? 'border-red-500' : 'border-gray-300'
@@ -102,19 +112,26 @@ export default function RegisterForm() {
                         )}
                     </div>
                     <div className="mb-6">
-                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-black">
+                        <label
+                            htmlFor="confirmPassword"
+                            className="block text-sm font-medium text-black"
+                        >
                             Confirm Password
                         </label>
                         <input
                             type="password"
                             id="confirmPassword"
-                            {...register('confirmPassword', { required: 'Please confirm your password' })}
+                            {...register('confirmPassword', {
+                                required: 'Please confirm your password',
+                            })}
                             className={`mt-1 block w-full px-3 py-2 border text-black ${
                                 errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
                             } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
                         />
                         {errors.confirmPassword && (
-                            <p className="mt-1 text-sm text-red-500">{errors.confirmPassword.message}</p>
+                            <p className="mt-1 text-sm text-red-500">
+                                {errors.confirmPassword.message}
+                            </p>
                         )}
                     </div>
                     <button
@@ -131,15 +148,13 @@ export default function RegisterForm() {
                 </form>
                 {mutation.isError && (
                     <p className="mt-4 text-sm text-red-500 text-center">
-                        { errorMsg ? `${errorMsg}` : 'An error occurred. Please try again.' }
+                        {errorMsg ? `${errorMsg}` : 'An error occurred. Please try again.'}
                     </p>
                 )}
-                <div className='flex justify-center items-center mt-4'>
-                    <p className="text-gray-600">
-                        Already have an account?
-                    </p>
-                    <button 
-                        onClick={() => router.push('/login')} 
+                <div className="flex justify-center items-center mt-4">
+                    <p className="text-gray-600">Already have an account?</p>
+                    <button
+                        onClick={() => router.push('/login')}
                         className="text-gray-800 hover:text-gray-500 cursor-pointer bg-transparent border-none p-0 ml-1"
                     >
                         Click to login
