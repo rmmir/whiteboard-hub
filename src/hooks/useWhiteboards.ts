@@ -1,7 +1,7 @@
 'use client';
 
 import { Whiteboard, WhiteboardDetails } from '@/models/whiteboard';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 
 const fetchWhiteboards = async () => {
@@ -14,5 +14,26 @@ const addWhiteboard = async (whiteboard: WhiteboardDetails) => {
 };
 
 export const useWhiteboards = () => {
-    return useQuery({ queryKey: ['whiteboards'], queryFn: fetchWhiteboards });
+    const queryClient = useQueryClient();
+
+    const query = useQuery({ queryKey: ['whiteboards'], queryFn: fetchWhiteboards });
+
+    const addWhiteboardMutation = useMutation({
+        mutationFn: addWhiteboard,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['whiteboards'] });
+        },
+    })
+
+    return {
+        ...query,
+
+        // ADD
+        addWhiteboardMutation,
+        addWhiteboardStatus: {
+            isPending: addWhiteboardMutation.isPending,
+            isSuccess: addWhiteboardMutation.isSuccess,
+            error: addWhiteboardMutation.error,
+        }
+    }
 };

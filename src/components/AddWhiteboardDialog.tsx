@@ -10,8 +10,24 @@ import {
 import { Input } from '@/components/shadcn-ui/input';
 import { Button } from '@/components/shadcn-ui/button';
 import { Label } from '@/components/shadcn-ui/label';
+import { useWhiteboards } from '@/hooks/useWhiteboards';
 
 const AddWhiteboardDialog: React.FC = () => {
+    const { addWhiteboardMutation } = useWhiteboards();
+    const handleAddWhiteboard = (data: any) => {
+        addWhiteboardMutation.mutate(
+            data,
+            {
+                onError: (error) => {
+                    console.error('Error adding whiteboard:', error);
+                },
+                onSuccess: () => {
+                    console.log('Whiteboard added successfully!');
+                },
+            }
+        );
+    };
+
     return (
         <Dialog>
             <DialogTrigger asChild>
