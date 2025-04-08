@@ -1,14 +1,12 @@
-import { drizzle } from 'drizzle-orm/libsql';
 import { eq } from 'drizzle-orm';
 
+import { db } from '@db/index';
 import { whiteboardTable } from '@/db/schema';
 import {
     CreateWhiteboardData,
     UpdateWhiteboardDetailsData,
     UpdateWhiteboardElementsData,
 } from '@/models/whiteboard';
-
-const db = drizzle(process.env.DATABASE_URL!);
 
 export async function getAllWhiteboards() {
     return await db.select().from(whiteboardTable);

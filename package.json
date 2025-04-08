@@ -9,6 +9,7 @@
         "lint": "next lint",
         "lint:fix": "next lint --fix .",
         "format": "prettier --write .",
+        "psql": "docker exec -it postgres-db psql -U postgres",
         "prepare": "husky install"
     },
     "lint-staged": {
@@ -30,7 +31,7 @@
         "drizzle-orm": "^0.40.1",
         "jose": "^6.0.10",
         "lucide-react": "^0.487.0",
-        "next": "15.2.2",
+        "pg": "^8.14.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-hook-form": "^7.55.0",
@@ -44,6 +45,7 @@
         "@tailwindcss/postcss": "^4",
         "@types/bcrypt": "^5.0.2",
         "@types/node": "^20",
+        "@types/pg": "^8.11.11",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "@types/uuid": "^10.0.0",

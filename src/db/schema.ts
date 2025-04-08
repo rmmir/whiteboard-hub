@@ -1,8 +1,8 @@
-import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { pgTable, text, json } from "drizzle-orm/pg-core";
 import { sql } from 'drizzle-orm';
 import { v4 as uuid } from 'uuid';
 
-export const usersTable = sqliteTable('user', {
+export const usersTable = pgTable('user', {
     id: text('id').primaryKey().default(uuid()),
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
@@ -15,11 +15,11 @@ export const usersTable = sqliteTable('user', {
         .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const whiteboardTable = sqliteTable('whiteboard', {
+export const whiteboardTable = pgTable('whiteboard', {
     id: text('id').primaryKey().default(uuid()),
     name: text('name').notNull(),
     description: text('description').notNull(),
-    elements: text('elements', { mode: 'json' }).notNull(),
+    elements: json('elements').notNull(),
     createdAt: text('created_at')
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),

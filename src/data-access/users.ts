@@ -1,10 +1,8 @@
-import { drizzle } from 'drizzle-orm/libsql';
 import { eq } from 'drizzle-orm';
 
+import { db } from '@db/index';
 import { usersTable } from '@/db/schema';
 import { UserRegisterData } from '@/models/user';
-
-const db = drizzle(process.env.DATABASE_URL!);
 
 export async function getAllUsers() {
     return await db.select().from(usersTable);
