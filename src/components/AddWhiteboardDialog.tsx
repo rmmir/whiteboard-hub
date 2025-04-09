@@ -11,10 +11,16 @@ import { Input } from '@/components/shadcn-ui/input';
 import { Button } from '@/components/shadcn-ui/button';
 import { Label } from '@/components/shadcn-ui/label';
 import { useWhiteboards } from '@/hooks/useWhiteboards';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+type AddWhiteboardParams = {
+    name: string;
+    description: string;
+}
 
 const AddWhiteboardDialog: React.FC = () => {
     const { addWhiteboardMutation } = useWhiteboards();
-    const handleAddWhiteboard = (data: any) => {
+    const handleAddWhiteboard = (data: AddWhiteboardParams) => {
         addWhiteboardMutation.mutate(
             data,
             {
@@ -27,6 +33,13 @@ const AddWhiteboardDialog: React.FC = () => {
             }
         );
     };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm<AddWhiteboardParams>()
+
+    const onSubmit: SubmitHandler<AddWhiteboardParams> = (data) => handleAddWhiteboard(data)
 
     return (
         <Dialog>
@@ -42,25 +55,27 @@ const AddWhiteboardDialog: React.FC = () => {
                         Add your whiteboard here. Click save when you're done.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="title" className="text-right">
-                            Title
-                        </Label>
-                        <Input id="title" className="col-span-3" />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="name" className="text-right">
+                                Name
+                            </Label>
+                            <Input id="name" className="col-span-3" {...register("name")} />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="description" className="text-right">
+                                Description
+                            </Label>
+                            <Input id="description" className="col-span-3" {...register("description")} />
+                        </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="description" className="text-right">
-                            Description
-                        </Label>
-                        <Input id="description" className="col-span-3" />
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button className="cursor-pointer" type="submit">
-                        Save changes
-                    </Button>
-                </DialogFooter>
+                    <DialogFooter>
+                        <Button className="cursor-pointer" type="submit">
+                            Save changes
+                        </Button>
+                    </DialogFooter>
+                </form>
             </DialogContent>
         </Dialog>
     );
