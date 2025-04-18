@@ -37,7 +37,7 @@ export async function createWhiteboardHandler(request: NextRequest) {
         elements: [],
         userId: (payload as SessionPayload).userId,
     };
-
+    console.log(newWhiteboard)
     await createWhiteboard(newWhiteboard);
 }
 

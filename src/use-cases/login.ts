@@ -11,7 +11,6 @@ export async function login(req: NextRequest) {
     if (!parsedResult.success) {
         return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
     }
-
     const user: UserLoginData = parsedResult.data;
     const existingUser = await getUserByEmail(user.email);
     const isPasswordMatch =

@@ -36,10 +36,14 @@ const AddWhiteboardDialog: React.FC = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
       } = useForm<AddWhiteboardParams>()
 
-    const onSubmit: SubmitHandler<AddWhiteboardParams> = (data) => handleAddWhiteboard(data)
+    const onSubmit: SubmitHandler<AddWhiteboardParams> = (data) => {
+        handleAddWhiteboard(data);
+        reset();
+    }
 
     return (
         <Dialog>
@@ -71,9 +75,11 @@ const AddWhiteboardDialog: React.FC = () => {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button className="cursor-pointer" type="submit">
-                            Save changes
-                        </Button>
+                        <DialogTrigger asChild>
+                            <Button className="cursor-pointer" type="submit">
+                                Save changes
+                            </Button>
+                        </DialogTrigger>
                     </DialogFooter>
                 </form>
             </DialogContent>
