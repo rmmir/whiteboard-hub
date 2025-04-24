@@ -13,9 +13,12 @@ import {
 import WhiteboardCardDialog from '@/components/WhiteboardCardDialog';
 import { useWhiteboards } from '@/hooks/useWhiteboards';
 import { Whiteboard } from '@/models/whiteboard';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-    const { data, isLoading, isError } = useWhiteboards();
+    const { data, isLoading, isError } = useWhiteboards().getWhiteboards;
+    const router = useRouter();
+    
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Something went wrong!</p>;
 
@@ -44,7 +47,10 @@ export default function Home() {
                                 <p>{`Last update: ${whiteboard.updatedAt}`}</p>
                             </CardContent>
                             <CardFooter className="flex justify-end">
-                                <button className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 cursor-pointer">
+                                <button 
+                                    className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 cursor-pointer"
+                                    onClick={() => router.push(`whiteboards/${whiteboard.id}`)}
+                                >
                                     Open
                                 </button>
                             </CardFooter>

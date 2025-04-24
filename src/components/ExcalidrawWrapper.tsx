@@ -39,18 +39,13 @@ const ExcalidrawWrapper: React.FC = () => {
     };
 
     return (
-        <>
-            <h1 className="text-2xl font-bold mt-5">Whiteboard title</h1>
-            <div
-                style={{ height: '85vh', width: '90vw', borderRadius: '20px', overflow: 'hidden' }}
-            >
-                <Excalidraw
-                    initialData={{ elements }}
-                    onChange={handleElementsChange}
-                    onPointerUp={handlePointerUp}
-                />
-            </div>
-        </>
+        <div style={{ height: '85vh', width: '90vw', borderRadius: '20px', overflow: 'hidden' }}>
+            <Excalidraw
+                initialData={{ elements }}
+                onChange={handleElementsChange}
+                onPointerUp={handlePointerUp}
+            />
+        </div>
     );
 };
 
