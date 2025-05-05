@@ -5,9 +5,10 @@ import { updateWhiteboardDetailsHandler } from '@/use-cases/whiteboards';
 import { catchErrorHandler } from '@/lib/errorHandler';
 import { Params } from '@/models/utils';
 
-export async function GET(_: NextRequest, { params }: Params) {
+export async function GET(_: NextRequest, context: Params) {
     try {
-        const whiteboards = await getWhiteboardById(params.id);
+        const { id } = await context.params;
+        const whiteboards = await getWhiteboardById(id);
 
         return NextResponse.json(whiteboards);
     } catch (error) {

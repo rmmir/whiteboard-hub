@@ -5,6 +5,7 @@ import { decrypt } from '@/lib/session';
 import { getUserById } from '@/data-access/users';
 import { Providers } from '../providers';
 import '../globals.css'
+import Header from '@/components/Header';
 
 
 export default async function RootLayout({
@@ -31,7 +32,10 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body>
-                <Providers>{children}</Providers>
+                <Providers>
+                    <Header />
+                    {children}
+                </Providers>
             </body>
         </html>
     );

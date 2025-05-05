@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 
 import { db } from '@db/index';
 import { usersTable } from '@/db/schema';
-import { UserRegisterData } from '@/models/user';
+import { User, UserRegisterData } from '@/models/user';
 
 export async function getAllUsers() {
     return await db.select().from(usersTable);
@@ -12,8 +12,17 @@ export async function getUserById(id: string) {
     return await db.select().from(usersTable).where(eq(usersTable.id, id));
 }
 
-export async function getUserByEmail(email: string) {
-    return await db.select().from(usersTable).where(eq(usersTable.email, email));
+export async function getUserByEmail(email: string): Promise<User | null> {
+    const user = await db
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.email, email));
+
+    if (user.length === 0) {
+        return null;
+    }
+
+    return user[0] as User;
 }
 
 export async function createUser(user: UserRegisterData, hashedPassword: string) {

@@ -13,7 +13,8 @@ export async function register(req: NextRequest) {
 
     const user: UserRegisterData = parsedResult.data;
     const existingUser = await getUserByEmail(user.email);
-    if (existingUser.length > 0) {
+    console.log('existingUser', existingUser);
+    if (existingUser) {
         return NextResponse.json({ error: 'Email already in use' }, { status: 400 });
     }
 

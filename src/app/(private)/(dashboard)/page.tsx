@@ -24,7 +24,6 @@ export default function Home() {
 
     return (
         <>
-            <Header />
             <main className="flex flex-col gap-[32px] row-start-2 items-center">
                 <div className="flex flex-row items-center justify-between w-full px-4 m-6">
                     <p className="text-gray-500">Create and manage your whiteboards.</p>

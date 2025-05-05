@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ message: `User registered successfully!` });
     } catch (error) {
+        console.error('Error in register route:', error);
         return catchErrorHandler(error);
     }
 }
