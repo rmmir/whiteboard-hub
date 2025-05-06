@@ -5,24 +5,36 @@ import dynamic from 'next/dynamic';
 
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 import '@excalidraw/excalidraw/index.css';
+import { useWhiteboards } from '@/hooks/useWhiteboards';
+
+type ExcalidrawWrapperProps = {
+    whiteboardId: string;
+};
 
 const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then((mod) => mod.Excalidraw), {
     ssr: false,
 });
 
-const ExcalidrawWrapper: React.FC = () => {
+const ExcalidrawWrapper: React.FC<ExcalidrawWrapperProps> = ({ whiteboardId }) => {
     const [elements, setElements] = useState<ExcalidrawElement[]>([]);
+    const { getWhiteboardById, editWhiteboardMutation } = useWhiteboards();
+
+    // Call getWhiteboardById directly at the top level
+    const { data, isLoading, isError } = getWhiteboardById(whiteboardId);
 
     useEffect(() => {
-        const savedData = localStorage.getItem('excalidrawScene');
-        if (savedData) {
-            setElements(JSON.parse(savedData));
+        if (!isLoading && !isError && data) {
+            const parsedElements = data.elements;
+            setElements(parsedElements);
         }
-    }, []);
+    }, [data, isLoading, isError]);
 
     useEffect(() => {
-        if (elements.length > 0) {
-            localStorage.setItem('excalidrawScene', JSON.stringify(elements));
+        if (elements) {
+            editWhiteboardMutation.mutate({
+                id: whiteboardId,
+                whiteboard: { elements: elements.toString() },
+            });
         }
     }, [elements]);
 
@@ -30,12 +42,11 @@ const ExcalidrawWrapper: React.FC = () => {
         const mutableElements = [...updatedElements] as ExcalidrawElement[];
         if (JSON.stringify(mutableElements) !== JSON.stringify(elements)) {
             setElements(mutableElements);
-            localStorage.setItem('excalidrawScene', JSON.stringify(mutableElements));
         }
     };
 
     const handlePointerUp = () => {
-        localStorage.setItem('excalidrawScene', JSON.stringify(elements));
+        setElements(elements);
     };
 
     return (

@@ -1,4 +1,5 @@
 import { whiteboardTable } from '@/db/schema';
+import { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 
 export type CreateWhiteboardData = Pick<
     typeof whiteboardTable.$inferInsert,
@@ -21,4 +22,6 @@ export type Whiteboard = {
     name: string;
     description: string;
     updatedAt: Date;
+    createdAt: Date;
+    elements: ExcalidrawElement[];
 };

@@ -16,7 +16,7 @@ export default function WhiteboardPage() {
         <>
             <h1 className="text-2xl font-bold mb-4">{whiteboard.name}</h1>
             <p className="text-gray-500 mb-4">{whiteboard.description}</p>
-            <ExcalidrawWrapper />
+            <ExcalidrawWrapper whiteboardId={id as string} />
         </>
     );
 }

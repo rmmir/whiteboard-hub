@@ -1,9 +1,8 @@
 'use client';
 
-import { Whiteboard, WhiteboardDetails } from '@/models/whiteboard';
+import { Whiteboard, WhiteboardDetails, WhiteboardElements } from '@/models/whiteboard';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
-import { use } from 'react';
 
 const fetchWhiteboards = async () => {
     const response: AxiosResponse<Whiteboard[]> = await axios.get('/api/whiteboards');
@@ -19,6 +18,10 @@ const addWhiteboard = async (whiteboard: WhiteboardDetails) => {
     await axios.post('/api/whiteboards', whiteboard);
 };
 
+const editWhiteboard = async (id: string, whiteboard: WhiteboardElements) => {
+    await axios.put(`/api/whiteboards/${id}`, whiteboard);
+};
+
 export const useWhiteboards = () => {
     const queryClient = useQueryClient();
 
@@ -30,7 +33,14 @@ export const useWhiteboards = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['whiteboards'] });
         },
-    })
+    });
+
+    const editWhiteboardMutation = useMutation({
+        mutationFn: ({ id, whiteboard }: { id: string; whiteboard: WhiteboardElements }) => editWhiteboard(id, whiteboard),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['whiteboards'] });
+        },
+    });
 
     return {
         getWhiteboards,
@@ -40,6 +50,12 @@ export const useWhiteboards = () => {
             isPending: addWhiteboardMutation.isPending,
             isSuccess: addWhiteboardMutation.isSuccess,
             error: addWhiteboardMutation.error,
-        }
+        },
+        editWhiteboardMutation,
+        editWhiteboardStatus: {
+            isPending: editWhiteboardMutation.isPending,
+            isSuccess: editWhiteboardMutation.isSuccess,
+            error: editWhiteboardMutation.error,
+        },
     }
 };
