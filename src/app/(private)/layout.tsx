@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { decrypt } from '@/lib/session';
+import { decrypt } from '@/utils/session';
 import { getUserById } from '@/data-access/users';
 import { Providers } from '../providers';
-import '../globals.css'
+import '../globals.css';
 import Header from '@/components/Header';
-
 
 export default async function RootLayout({
     children,

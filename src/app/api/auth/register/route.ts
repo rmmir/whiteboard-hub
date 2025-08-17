@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { register } from '@/use-cases/register';
-import { catchErrorHandler } from '@/lib/errorHandler';
+import { catchErrorHandler } from '@/utils/errorHandler';
 
 export async function POST(req: NextRequest) {
     try {

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import { db } from '@db/index';
 import { whiteboardTable } from '@/db/schema';
@@ -8,12 +8,15 @@ import {
     UpdateWhiteboardElementsData,
 } from '@/models/whiteboard';
 
-export async function getAllWhiteboards() {
-    return await db.select().from(whiteboardTable);
+export async function getAllWhiteboards(userId: string) {
+    return await db.select().from(whiteboardTable).where(eq(whiteboardTable.userId, userId));
 }
 
-export async function getWhiteboardById(id: string) {
-    return await db.select().from(whiteboardTable).where(eq(whiteboardTable.id, id));
+export async function getWhiteboardById(userId: string, id: string) {
+    return await db
+        .select()
+        .from(whiteboardTable)
+        .where(and(eq(whiteboardTable.id, id), eq(whiteboardTable.userId, userId)));
 }
 
 export async function createWhiteboard(whiteboard: CreateWhiteboardData) {

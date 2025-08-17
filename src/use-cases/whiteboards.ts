@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-
 import {
+    getAllWhiteboards,
     createWhiteboard,
     updateWhiteboardDetailsById,
     updateWhiteboardElementsById,
+    getWhiteboardById,
 } from '@/data-access/whiteboards';
-import { authGuardCheck, SessionPayload } from '@/lib/session';
+import { processAuthGuard } from '@/utils/session';
 import {
     createWhiteboardSchema,
     updateWhiteboardDetailsSchema,
     updateWhiteboardElementsSchema,
-} from '@/lib/whiteboardSchema';
+} from '@/schemas/whiteboardSchema';
 import {
     CreateWhiteboardData,
     UpdateWhiteboardDetailsData,
@@ -28,52 +29,63 @@ export async function createWhiteboardHandler(request: NextRequest) {
 
     const whiteboard: WhiteboardDetails = parsedResult.data;
     const session = request.cookies.get('session');
-    const payload = await authGuardCheck(session);
-    if (!payload) return payload;
+    const { userId } = await processAuthGuard(session);
 
     const newWhiteboard: CreateWhiteboardData = {
         name: whiteboard.name,
         description: whiteboard.description,
         elements: [],
-        userId: (payload as SessionPayload).userId,
+        userId,
     };
-    console.log(newWhiteboard)
+
     await createWhiteboard(newWhiteboard);
 }
 
-export async function updateWhiteboardDetailsHandler(request: NextRequest, params: ParamsId) {
+export async function updateWhiteboardDetailsHandler(request: NextRequest, id: string) {
+    const session = request.cookies.get('session');
+    await processAuthGuard(session);
+
     const parsedResult = updateWhiteboardDetailsSchema.safeParse(await request.json());
     if (!parsedResult.success) {
         return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
     const whiteboard: WhiteboardDetails = parsedResult.data;
-    const session = request.cookies.get('session');
-    const payload = await authGuardCheck(session);
-    if (!payload) return payload;
-
     const updatedWhiteboardDetails: UpdateWhiteboardDetailsData = {
         name: whiteboard.name,
         description: whiteboard.description,
     };
 
-    await updateWhiteboardDetailsById(params.id, updatedWhiteboardDetails);
+    await updateWhiteboardDetailsById(id, updatedWhiteboardDetails);
 }
 
-export async function updateWhiteboardContentHandler(request: NextRequest, params: ParamsId) {
+export async function updateWhiteboardContentHandler(request: NextRequest, id: string) {
+    const session = request.cookies.get('session');
+    await processAuthGuard(session);
+
     const parsedResult = updateWhiteboardElementsSchema.safeParse(await request.json());
     if (!parsedResult.success) {
         return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
     const whiteboardElements: WhiteboardElements = parsedResult.data;
-    const session = request.cookies.get('session');
-    const payload = await authGuardCheck(session);
-    if (!payload) return payload;
-
     const updatedWhiteboardDetails: UpdateWhiteboardElementsData = {
         elements: whiteboardElements.elements,
     };
 
-    await updateWhiteboardElementsById(params.id, updatedWhiteboardDetails);
+    await updateWhiteboardElementsById(id, updatedWhiteboardDetails);
+}
+
+export async function getWhiteboardsHandler(request: NextRequest) {
+    const session = request.cookies.get('session');
+    const { userId } = await processAuthGuard(session);
+
+    return await getAllWhiteboards(userId);
+}
+
+export async function getWhiteboardByIdHandler(request: NextRequest, whiteboardId: string) {
+    const session = request.cookies.get('session');
+    const { userId } = await processAuthGuard(session);
+
+    return await getWhiteboardById(userId, whiteboardId);
 }

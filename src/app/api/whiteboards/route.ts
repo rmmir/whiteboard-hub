@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getAllWhiteboards } from '@/data-access/whiteboards';
-import { createWhiteboardHandler } from '@/use-cases/whiteboards';
-import { catchErrorHandler } from '@/lib/errorHandler';
+import { createWhiteboardHandler, getWhiteboardsHandler } from '@/use-cases/whiteboards';
+import { catchErrorHandler } from '@/utils/errorHandler';
 
-export async function GET() {
-    const whiteboards = await getAllWhiteboards();
+export async function GET(request: NextRequest) {
+    const whiteboards = await getWhiteboardsHandler(request);
 
     return NextResponse.json(whiteboards);
 }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcrypt';
+import { hash } from '@node-rs/bcrypt';
 
-import { regiserSchema } from '@/lib/authSchema';
+import { regiserSchema } from '@/schemas/authSchema';
 import { UserRegisterData } from '@/models/user';
 import { createUser, getUserByEmail } from '@/data-access/users';
 
@@ -18,7 +18,7 @@ export async function register(req: NextRequest) {
         return NextResponse.json({ error: 'Email already in use' }, { status: 400 });
     }
 
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const hashedPassword = await hash(user.password, 10);
 
     await createUser(user, hashedPassword);
 }

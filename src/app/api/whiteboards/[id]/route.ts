@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getWhiteboardById } from '@/data-access/whiteboards';
-import { updateWhiteboardDetailsHandler } from '@/use-cases/whiteboards';
-import { catchErrorHandler } from '@/lib/errorHandler';
+import { getWhiteboardByIdHandler, updateWhiteboardDetailsHandler } from '@/use-cases/whiteboards';
+import { catchErrorHandler } from '@/utils/errorHandler';
 import { Params } from '@/models/utils';
 
-export async function GET(_: NextRequest, context: Params) {
+export async function GET(request: NextRequest, context: Params) {
     try {
         const { id } = await context.params;
-        const whiteboards = await getWhiteboardById(id);
+        const whiteboards = await getWhiteboardByIdHandler(request, id);
 
         return NextResponse.json(whiteboards);
     } catch (error) {
@@ -16,9 +15,10 @@ export async function GET(_: NextRequest, context: Params) {
     }
 }
 
-export async function PATCH(request: NextRequest, { params }: Params) {
+export async function PATCH(request: NextRequest, context: Params) {
     try {
-        const response = await updateWhiteboardDetailsHandler(request, params);
+        const { id } = await context.params;
+        const response = await updateWhiteboardDetailsHandler(request, id);
         if (response instanceof NextResponse) {
             return response;
         }

@@ -1,10 +1,10 @@
-import bcrypt from 'bcrypt';
+import { compare } from '@node-rs/bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { loginSchema } from '@/lib/authSchema';
-import { createSession } from '@/lib/session';
+import { loginSchema } from '@/schemas/authSchema';
+import { createSession } from '@/utils/session';
 import { getUserByEmail } from '@/data-access/users';
-import { User, UserLoginData } from '@/models/user';
+import { UserLoginData } from '@/models/user';
 
 export async function login(req: NextRequest) {
     const parsedResult = loginSchema.safeParse(await req.json());
@@ -16,11 +16,11 @@ export async function login(req: NextRequest) {
     if (!existingUser) {
         return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
     }
-    const isPasswordMatch = await bcrypt.compare(user.password, existingUser.password);
+    const isPasswordMatch = await compare(user.password, existingUser.password);
     if (!isPasswordMatch) {
         return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
     }
-    
+
     const sessionCookie = await createSession(existingUser.id);
     const response = NextResponse.json({ message: 'Login successful' });
     response.headers.set('Set-Cookie', sessionCookie.toString());

@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { RequestCookie, ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse } from 'next/server';
 import { getUserById } from '@/data-access/users';
+import { HttpError } from './errorHandler';
 
 export type SessionPayload = {
     userId: string;
@@ -43,21 +44,16 @@ export async function decrypt(session: string | undefined = ''): Promise<Session
     }
 }
 
-export async function authGuardCheck(session: RequestCookie | undefined) {
-    if (!session) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+export async function processAuthGuard(
+    session: RequestCookie | undefined,
+): Promise<SessionPayload> {
+    if (!session) throw new HttpError(401, 'Unauthorized');
 
     const payload = await decrypt(session.value);
-    if (!payload) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!payload) throw new HttpError(401, 'Unauthorized');
 
     const user = await getUserById(payload.userId);
-
-    if (user.length === 0) {
-        return NextResponse.json({ error: `Invalid userId: ${payload.userId}`, status: 400 });
-    }
+    if (user.length === 0) throw new HttpError(400, `Invalid userId: ${payload.userId}`);
 
     return payload;
 }

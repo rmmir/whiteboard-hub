@@ -19,7 +19,7 @@ const addWhiteboard = async (whiteboard: WhiteboardDetails) => {
 };
 
 const editWhiteboard = async (id: string, whiteboard: WhiteboardElements) => {
-    await axios.put(`/api/whiteboards/${id}`, whiteboard);
+    await axios.patch(`/api/whiteboards/${id}/content`, whiteboard);
 };
 
 export const useWhiteboards = () => {
