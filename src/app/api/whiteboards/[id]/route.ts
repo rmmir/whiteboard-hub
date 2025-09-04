@@ -7,9 +7,12 @@ import { Params } from '@/models/utils';
 export async function GET(request: NextRequest, context: Params) {
     try {
         const { id } = await context.params;
-        const whiteboards = await getWhiteboardByIdHandler(request, id);
-
-        return NextResponse.json(whiteboards);
+        const whiteboard = await getWhiteboardByIdHandler(request, id);
+        if (whiteboard) {
+            const parsedElements = JSON.parse(whiteboard.elements)
+            console.log('test::: ', whiteboard.elements)
+        }
+        return NextResponse.json(whiteboard);
     } catch (error) {
         return catchErrorHandler(error);
     }

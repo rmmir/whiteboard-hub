@@ -19,7 +19,6 @@ import {
     WhiteboardDetails,
     WhiteboardElements,
 } from '@/models/whiteboard';
-import { ParamsId } from '@/models/utils';
 
 export async function createWhiteboardHandler(request: NextRequest) {
     const parsedResult = createWhiteboardSchema.safeParse(await request.json());
@@ -68,9 +67,10 @@ export async function updateWhiteboardContentHandler(request: NextRequest, id: s
         return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
-    const whiteboardElements: WhiteboardElements = parsedResult.data;
+    const whiteboardElements: any = parsedResult.data;
+    console.log(whiteboardElements)
     const updatedWhiteboardDetails: UpdateWhiteboardElementsData = {
-        elements: whiteboardElements.elements,
+        elements: whiteboardElements,
     };
 
     await updateWhiteboardElementsById(id, updatedWhiteboardDetails);

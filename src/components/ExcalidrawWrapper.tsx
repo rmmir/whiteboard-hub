@@ -25,12 +25,13 @@ const ExcalidrawWrapper: React.FC<ExcalidrawWrapperProps> = ({ whiteboardId }) =
     useEffect(() => {
         if (!isLoading && !isError && data) {
             const parsedElements = data.elements;
-            setElements(parsedElements);
+            setElements(parsedElements as any);
         }
     }, [data, isLoading, isError]);
 
     useEffect(() => {
-        if (elements) {
+        if (elements?.length > 0) {
+            const jsonElements = { elements };
             editWhiteboardMutation.mutate({
                 id: whiteboardId,
                 whiteboard: { elements: elements.toString() },

@@ -23,5 +23,5 @@ export type Whiteboard = {
     description: string;
     updatedAt: Date;
     createdAt: Date;
-    elements: ExcalidrawElement[];
+    elements: string;
 };
